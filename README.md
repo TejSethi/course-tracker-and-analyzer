@@ -27,6 +27,22 @@ project run from the project's root directory:
 sqlite3 database.db
 ```
 
+## Wireframes
 
-TODO: 
-  - Add year column to courses table to ER diagram
+All Courses Page
+
+![Courses Page Wireframe](wireframes/courses_page.png)
+
+Course Details page
+
+![Course Details Page Wireframe](wireframes/course_page.png)
+
+Course Form (Add / Edit course)
+
+![Course Form Wireframe](wireframes/Course_form.png)
+
+
+Assessment Form (Add / Edit assessment)
+
+![Assessment Form Wireframe](wireframes/Assessment_form.png)
+
