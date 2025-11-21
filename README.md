@@ -31,11 +31,11 @@ sqlite3 database.db
 
 All Courses Page
 
-![Courses Page Wireframe](wireframes/courses_page.png)
+![Courses Page Wireframe](wireframes/Courses_page.png)
 
 Course Details page
 
-![Course Details Page Wireframe](wireframes/course_page.png)
+![Course Details Page Wireframe](wireframes/Course_page.png)
 
 Course Form (Add / Edit course)
 
