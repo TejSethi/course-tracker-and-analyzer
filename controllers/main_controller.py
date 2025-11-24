@@ -1,4 +1,5 @@
 from models.db_models import Session, Course
+from views.course_details_view import CourseDetailsView
 from views.course_form_view import CourseFormView
 from views.home_view import HomeView
 
@@ -23,7 +24,7 @@ class MainController:
         home_view.pack(fill="both", expand=True)
         self.current_page = home_view
 
-    def go_to_add_course_page(self):
+    def show_add_course_page(self):
         """Switch to the Add Course page"""
         previous_page = self.current_page
         # remove old page from memory
@@ -32,6 +33,16 @@ class MainController:
         add_course_view = CourseFormView(parent=self.master, controller=self)  # calling with keyword args
         add_course_view.pack(fill="both", expand=True)
         self.current_page = add_course_view
+
+    def show_course_details_page(self, course_id):
+        """Switch to the Course Details page"""
+        previous_page = self.current_page
+        # remove old page from memory
+        if previous_page:
+            previous_page.destroy()
+        course_details_view = CourseDetailsView(parent=self.master, controller=self, course_id=course_id)
+        course_details_view.pack(fill="both", expand=True)
+        self.current_page = course_details_view
 
     def get_all_courses(self):
         """Return all courses from the database."""
@@ -48,3 +59,10 @@ class MainController:
         db.add(course)
         db.commit()
         db.close()
+
+    def get_course_by_id(self, course_id):
+        """Return course by course_id (pk) from the database."""
+        db = Session()
+        course = db.query(Course).filter(Course.id == course_id).first()
+        db.close()
+        return course

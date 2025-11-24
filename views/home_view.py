@@ -12,27 +12,27 @@ class HomeView(Frame):
         title_label.pack(fill="x", pady=(0, 10))
 
         add_course_button = Button(self, text="Add Course", bg="white", bd=1, relief="solid", cursor="hand2",
-                                   command=self.controller.go_to_add_course_page)
+                                   command=self.controller.show_add_course_page)
         add_course_button.pack(anchor="w")
         add_course_button.config(padx=10)
 
 
         # courses table
         columns = ("course", "instructor", "term", "average")
-        courses_table_tree = ttk.Treeview(self, columns=columns, show="headings")
-        courses_table_tree.pack(fill="x", pady=10)
+        self.courses_table_tree = ttk.Treeview(self, columns=columns, show="headings")
+        self.courses_table_tree.pack(fill="x", pady=10)
 
         # Define column headings
-        courses_table_tree.heading("course", text="Course", anchor="w")
-        courses_table_tree.heading("instructor", text="Instructor", anchor="w")
-        courses_table_tree.heading("term", text="Term", anchor="w")
-        courses_table_tree.heading("average", text="Average", anchor="w")
+        self.courses_table_tree.heading("course", text="Course", anchor="w")
+        self.courses_table_tree.heading("instructor", text="Instructor", anchor="w")
+        self.courses_table_tree.heading("term", text="Term", anchor="w")
+        self.courses_table_tree.heading("average", text="Average", anchor="w")
 
         # Configure column properties (optional)
-        courses_table_tree.column("course", width=150, anchor="w")
-        courses_table_tree.column("instructor", width=150, anchor="w")
-        courses_table_tree.column("term", width=100, anchor="w")
-        courses_table_tree.column("average", width=50, anchor="w")
+        self.courses_table_tree.column("course", width=150, anchor="w")
+        self.courses_table_tree.column("instructor", width=150, anchor="w")
+        self.courses_table_tree.column("term", width=100, anchor="w")
+        self.courses_table_tree.column("average", width=50, anchor="w")
 
         # fetch data from db
         courses = self.controller.get_all_courses()
@@ -44,4 +44,15 @@ class HomeView(Frame):
                 f"{course.semester} {course.year}",
                 "85%"
             )
-            courses_table_tree.insert("", index="end", values=values)
+            # attach db id to the row (to retrieve when double clicking)
+            self.courses_table_tree.insert("", iid=course.id, index="end", values=values)
+
+        # row double click event binding
+        self.courses_table_tree.bind("<Double-Button-1>", self.select_course)
+
+    def select_course(self, event):
+        course_id = self.courses_table_tree.identify_row(event.y)
+        # check user clicked on a valid row
+        if course_id:
+            self.controller.show_course_details_page(course_id)
+
