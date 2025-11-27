@@ -1,4 +1,4 @@
-from models.db_models import Session, Course
+from models.db_models import Session, Course, Assessment
 from views.course_details_view import CourseDetailsView
 from views.course_form_view import CourseFormView
 from views.home_view import HomeView
@@ -66,3 +66,10 @@ class MainController:
         course = db.query(Course).filter(Course.id == course_id).first()
         db.close()
         return course
+
+    def get_assessments_for_course(self, course_id):
+        """Return list of assessments for course by the given course_id."""
+        db = Session()
+        assessments = db.query(Assessment).filter(Assessment.course_id == course_id).all()
+        db.close()
+        return assessments
