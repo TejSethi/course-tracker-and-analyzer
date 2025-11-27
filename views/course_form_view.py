@@ -1,6 +1,8 @@
 from tkinter import Frame, Label, Button, Entry, Text, messagebox
 from tkinter.ttk import Combobox
 
+from views.components.custom_button import CustomButton
+
 
 class CourseFormView(Frame):
     def __init__(self, parent, controller):
@@ -78,10 +80,10 @@ class CourseFormView(Frame):
         # buttons
         buttons_container = Frame(self)
         buttons_container.pack(fill="x", pady=20)
-        save_button = Button(buttons_container, text="Save", bg="white", bd=1, relief="solid", cursor="hand2")
+        save_button = CustomButton(buttons_container, text="Save")
         save_button.pack(side="right", padx=(10, 0))
         save_button.config(command=self.handle_click_save)
-        cancel_button = Button(buttons_container, text="Cancel", bg="white", bd=1, relief="solid", cursor="hand2")
+        cancel_button = CustomButton(buttons_container, text="Cancel")
         cancel_button.pack(side="right")
         cancel_button.config(command=self.handle_click_cancel)
 

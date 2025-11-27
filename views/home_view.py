@@ -1,5 +1,7 @@
 from tkinter import Frame, Label, Button, ttk
 
+from views.components.custom_button import CustomButton
+
 
 class HomeView(Frame):
     def __init__(self, parent, controller):
@@ -11,8 +13,7 @@ class HomeView(Frame):
         title_label = Label(self, text="Courses", font=("Arial", 24), anchor="w", justify="left")
         title_label.pack(fill="x", pady=(0, 10))
 
-        add_course_button = Button(self, text="Add Course", bg="white", bd=1, relief="solid", cursor="hand2",
-                                   command=self.controller.show_add_course_page)
+        add_course_button = CustomButton(self, text="Add Course", command=self.controller.show_add_course_page)
         add_course_button.pack(anchor="w")
         add_course_button.config(padx=10)
 
