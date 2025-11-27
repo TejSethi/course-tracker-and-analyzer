@@ -1,4 +1,4 @@
-from db_models import Session, Course
+from db_models import Session, Course, Assessment
 
 # insert a few courses (test data)
 db = Session()
@@ -50,4 +50,54 @@ course5 = Course(
 
 db.add_all([course1, course2, course3, course4, course5])
 db.commit()
+
+
+# Seed assessments
+
+assessment1 = Assessment(
+    course_id=course1.id,
+    name="A1",
+    grade=80.0,
+    weight=10.0,
+    type="Assignment"
+)
+
+assessment2 = Assessment(
+    course_id=course1.id,
+    name="Midterm 1",
+    grade=75.0,
+    weight=20.0,
+    type="Test"
+)
+
+assessment3 = Assessment(
+    course_id=course1.id,
+    name="A2",
+    grade=80.0,
+    weight=20.0,
+    type="Assignment"
+)
+
+assessment4 = Assessment(
+    course_id=course1.id,
+    name="Midterm 2",
+    grade=None,
+    weight=20.0,
+    type="Test"
+)
+
+assessment5 = Assessment(
+    course_id=course1.id,
+    name="Final Exam",
+    grade=None,
+    weight=30.0,
+    type="Exam"
+)
+
+db.add_all([assessment1, assessment2, assessment3, assessment4, assessment5])
+db.commit()
+
 db.close()
+
+
+print("Database Seeded")

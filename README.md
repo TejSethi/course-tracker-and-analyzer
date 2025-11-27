@@ -21,6 +21,11 @@ Run the following script to create all necessary tables:
 python models/create_db.py
 ```
 
+Then for seeding sample data:
+```
+python models/seed_db.py
+```
+
 To enter the sqlite CLI (command line interface) for this 
 project run from the project's root directory:
 ```
