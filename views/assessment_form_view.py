@@ -2,6 +2,7 @@ from tkinter import Frame, Label, Button, Entry, Text, messagebox, StringVar
 from tkinter.ttk import Combobox
 
 from views.components.custom_button import CustomButton
+from views.components.delete_button import DeleteButton
 
 
 class AssessmentFormView(Frame):
@@ -100,6 +101,10 @@ class AssessmentFormView(Frame):
             self.weight_entry.insert(0, str(int(assessment.weight)))
             self.grade_entry.insert(0, grade)
             self.type_var.set(assessment.type)
+            # include delete functionality when in edit mode
+            delete_button = DeleteButton(buttons_container, text="Delete")
+            delete_button.pack(side="right", padx=(0, 10))
+            delete_button.config(command=self.handle_delete_click)
 
     def validate_only_alpha(self, new_value):
         """
@@ -171,9 +176,17 @@ class AssessmentFormView(Frame):
     def handle_click_cancel(self):
         """
         Show a cancel confirm dialog.
-        If confirming, disregard any entered data and navigate to the course details page
+        If confirming, disregard any entered data and navigate to the course details page.
         """
 
         is_cancel = messagebox.askokcancel("Cancel?", "Are you sure you want leave unsaved changes?")
         if is_cancel:
+            self.controller.show_course_details_page(self.course.id)
+
+
+    def handle_delete_click(self):
+        """Delete existing assessment when clicking delete button. Navigate to course details page on confirmation."""
+        is_yes = messagebox.askyesno("Delete", "Are you sure you want to delete this assessment?")
+        if is_yes:
+            self.controller.delete_assessment(assessment_id=self.assessment.id)
             self.controller.show_course_details_page(self.course.id)
