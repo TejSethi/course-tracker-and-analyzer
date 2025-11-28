@@ -32,8 +32,8 @@ class HomeView(Frame):
         self.courses_table_tree.heading("average", text="Average", anchor="w")
 
         # Configure column properties (optional)
-        self.courses_table_tree.column("course", width=150, anchor="w")
-        self.courses_table_tree.column("instructor", width=150, anchor="w")
+        self.courses_table_tree.column("course", width=300, anchor="w")
+        self.courses_table_tree.column("instructor", width=100, anchor="w")
         self.courses_table_tree.column("term", width=100, anchor="w")
         self.courses_table_tree.column("average", width=50, anchor="w")
 
