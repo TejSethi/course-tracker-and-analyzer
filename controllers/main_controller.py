@@ -97,3 +97,15 @@ class MainController:
         course.year = year
         db.commit()
         db.close()
+
+    def delete_course(self, course_id):
+        """Delete course by course_id, deleting all related assessments as well."""
+        db = Session()
+        course = db.query(Course).filter(Course.id == course_id).first()
+        # delete each assessment (ondelete='CASCADE' not working)
+        assessments = db.query(Assessment).filter(Assessment.course_id == course_id).all()
+        for a in assessments:
+            db.delete(a)
+        db.delete(course)
+        db.commit()
+        db.close()

@@ -35,7 +35,7 @@ class Assessment(Base):
     __tablename__ = 'assessments' # Name of the table in the database
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    course_id = Column(Integer, ForeignKey('courses.id'), nullable=False)
+    course_id = Column(Integer, ForeignKey('courses.id', ondelete="CASCADE"), nullable=False)
     name = Column(String, nullable=False)
     grade = Column(Float)
     weight = Column(Float, nullable=False)
