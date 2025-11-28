@@ -2,7 +2,9 @@ from tkinter import Frame, Label, Button, Entry, messagebox
 from tkinter.ttk import Treeview
 
 import utils
+from views.components.add_button import AddButton
 from views.components.custom_button import CustomButton
+from views.components.delete_button import DeleteButton
 
 
 class CourseDetailsView(Frame):
@@ -25,7 +27,7 @@ class CourseDetailsView(Frame):
 
         # edit / delete buttons
         edit_button = CustomButton(header_frame, text="Edit")
-        delete_button = CustomButton(header_frame, text="Delete")
+        delete_button = DeleteButton(header_frame, text="Delete")
         back_button = CustomButton(header_frame, text="<-- Go back")
         edit_button.pack(side="left", padx=(30, 10))
         delete_button.pack(side="left", padx=(0, 10))
@@ -56,7 +58,7 @@ class CourseDetailsView(Frame):
         assessments_header_frame.pack(fill="x", pady=(0, 10))
         header_title_label = Label(assessments_header_frame, text="Assessments")
         header_title_label.pack(side="left")
-        add_assessment_button = CustomButton(assessments_header_frame, text="Add Assessment")
+        add_assessment_button = AddButton(assessments_header_frame, text="Add Assessment")
         add_assessment_button.pack(side="left", padx=(10, 0))
         add_assessment_button.config(command=self.handle_add_assessment_click)
 

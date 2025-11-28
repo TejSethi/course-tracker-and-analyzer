@@ -163,3 +163,11 @@ class MainController:
         assessment = db.query(Assessment).filter(Assessment.id == assessment_id).first()
         db.close()
         return assessment
+
+    def delete_assessment(self, assessment_id):
+        """Delete assessment by assessment_id."""
+        db = Session()
+        assessment = db.query(Assessment).filter(Assessment.id == assessment_id).first()
+        db.delete(assessment)
+        db.commit()
+        db.close()
