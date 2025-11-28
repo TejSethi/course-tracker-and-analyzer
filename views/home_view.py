@@ -1,5 +1,6 @@
 from tkinter import Frame, Label, Button, ttk
 
+import utils
 from views.components.custom_button import CustomButton
 
 
@@ -39,11 +40,16 @@ class HomeView(Frame):
         courses = self.controller.get_all_courses()
 
         for course in courses:
+            assessments = self.controller.get_assessments_for_course(course.id)
+            average = utils.calc_assessments_average(assessments)
+            average_text = "-"
+            if len(assessments) > 0:
+                average_text = f"{average:.1f}%"
             values = (
                 f"{course.code}: {course.name}",
                 course.instructor,
                 f"{course.semester} {course.year}",
-                "85%"
+                average_text
             )
             # attach db id to the row (to retrieve when double clicking)
             self.courses_table_tree.insert("", iid=course.id, index="end", values=values)

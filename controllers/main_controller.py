@@ -30,7 +30,7 @@ class MainController:
         # remove old page from memory
         if previous_page:
             previous_page.destroy()
-        add_course_view = CourseFormView(parent=self.master, controller=self)  # calling with keyword args
+        add_course_view = CourseFormView(parent=self.master, controller=self, course=None)  # calling with keyword args
         add_course_view.pack(fill="both", expand=True)
         self.current_page = add_course_view
 
@@ -43,6 +43,16 @@ class MainController:
         course_details_view = CourseDetailsView(parent=self.master, controller=self, course_id=course_id)
         course_details_view.pack(fill="both", expand=True)
         self.current_page = course_details_view
+
+    def show_edit_course_page(self, course):
+        """Switch to the Course Edit page to edit the course given."""
+        previous_page = self.current_page
+        # remove old page from memory
+        if previous_page:
+            previous_page.destroy()
+        add_course_view = CourseFormView(parent=self.master, controller=self, course=course)  # calling with keyword args
+        add_course_view.pack(fill="both", expand=True)
+        self.current_page = add_course_view
 
     def get_all_courses(self):
         """Return all courses from the database."""
@@ -73,3 +83,17 @@ class MainController:
         assessments = db.query(Assessment).filter(Assessment.course_id == course_id).all()
         db.close()
         return assessments
+
+    def update_course(self, course_id, name, description, code, instructor, semester, year):
+        """Update course by course_id with the new values."""
+        db = Session()
+        # Future TODO: validate that code, semester, year together are unique
+        course = db.query(Course).filter(Course.id == course_id).first()
+        course.name = name
+        course.description = description
+        course.code = code
+        course.instructor = instructor
+        course.semester = semester
+        course.year = year
+        db.commit()
+        db.close()

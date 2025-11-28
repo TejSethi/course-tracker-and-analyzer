@@ -13,29 +13,33 @@ class CourseDetailsView(Frame):
         self.config(padx=10, pady=10)
 
         # fetch the course from the database for the given course_id
-        course = self.controller.get_course_by_id(course_id)
+        self.course = self.controller.get_course_by_id(course_id)
 
         header_frame = Frame(self)
         header_frame.pack(fill="x", pady=(0, 10))
 
         # title
-        title_text = f"{course.code}: {course.name}"
+        title_text = f"{self.course.code}: {self.course.name}"
         title_label = Label(header_frame, text=title_text, font=("Arial", 16), anchor="w", justify="left")
         title_label.pack(side="left", fill="x")
 
         # edit / delete buttons
         edit_button = CustomButton(header_frame, text="Edit")
         delete_button = CustomButton(header_frame, text="Delete")
+        back_button = CustomButton(header_frame, text="<-- Go back")
         edit_button.pack(side="left", padx=(30, 10))
-        delete_button.pack(side="left")
+        delete_button.pack(side="left", padx=(0, 10))
+        back_button.pack(side="right")
+        edit_button.config(command=self.handle_edit_click)
+        back_button.config(command=self.handle_go_back)
 
         # direct course details (term, instructor, description)
         details_frame = Frame(self, bg="white", bd=2, relief="groove", padx=10, pady=10)
         details_frame.pack(fill="x", pady=(0, 20))
 
-        term_text = f"Term: {course.semester} {course.year}"
-        instructor_text = f"Instructor: {course.instructor}"
-        description_text = f"Description:\n{course.description}"
+        term_text = f"Term: {self.course.semester} {self.course.year}"
+        instructor_text = f"Instructor: {self.course.instructor}"
+        description_text = f"Description:\n{self.course.description}"
         term_label = Label(details_frame, text=term_text, bg="white", anchor="w", justify="left")
         instructor_label = Label(details_frame, text=instructor_text, bg="white", anchor="w", justify="left")
         description_label = Label(details_frame, text=description_text, bg="white", anchor="w", justify="left")
@@ -176,7 +180,17 @@ class CourseDetailsView(Frame):
         return False
 
 
+    def handle_edit_click(self):
+        """
+        Navigate to the edit page when clicking on the edit button.
+        """
+        self.controller.show_edit_course_page(self.course)
 
+    def handle_go_back(self):
+        """
+        Navigate back to the courses page when clicking on the Go back button.
+        """
+        self.controller.show_home_page()
 
     def select_assessment(self, event):
         ...
