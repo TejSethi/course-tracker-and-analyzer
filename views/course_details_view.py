@@ -58,6 +58,8 @@ class CourseDetailsView(Frame):
         header_title_label.pack(side="left")
         add_assessment_button = CustomButton(assessments_header_frame, text="Add Assessment")
         add_assessment_button.pack(side="left", padx=(10, 0))
+        add_assessment_button.config(command=self.handle_add_assessment_click)
+
         # display tree table
         self.assessments_tree_table = Treeview(assessments_frame,
                                                columns=("name", "type", "weight", "earned", "grade"),
@@ -84,7 +86,7 @@ class CourseDetailsView(Frame):
 
         for assessment in assessments:
 
-            grade = f"{assessment.grade}%" if assessment.grade else '-'
+            grade = f"{assessment.grade:.1f}%" if assessment.grade else '-'
             earned = f"{(assessment.grade / 100) * assessment.weight:.1f}" if assessment.grade else '-'
 
             values = (
@@ -117,27 +119,27 @@ class CourseDetailsView(Frame):
         current_average_label = Label(row_1, text=current_average_text, bg="white", anchor="w", justify="left")
         current_average_label.pack(side="left")
         average = utils.calc_assessments_average(assessments)
-        average_value = Label(row_1, text=f"{average}%", bg="white", anchor="e", justify="right")
+        average_value = Label(row_1, text=f"{average:.1f}%", bg="white", anchor="e", justify="right")
         average_value.pack(side="right")
         row_2 = Frame(analytics_data_frame, bg="white")
         row_2.pack(fill="x", pady=(0, 5))
         remaining_weight_label = Label(row_2, text=remaining_weight_text, bg="white", anchor="w", justify="left")
         remaining_weight = utils.get_remaining_weight(assessments)
-        remaining_weight_value = Label(row_2, text=f"{remaining_weight}%", bg="white", anchor="e", justify="right")
+        remaining_weight_value = Label(row_2, text=f"{remaining_weight:.1f}%", bg="white", anchor="e", justify="right")
         remaining_weight_label.pack(side="left")
         remaining_weight_value.pack(side="right")
         row_3 = Frame(analytics_data_frame, bg="white")
         row_3.pack(fill="x", pady=(0, 5))
         worst_case_label = Label(row_3, text=worst_case_text, bg="white", anchor="w", justify="left")
         worst_case_mark = utils.calc_worst_case_final_mark(assessments)
-        worst_case_value = Label(row_3, text=f"{worst_case_mark}%", bg="white", anchor="e", justify="right")
+        worst_case_value = Label(row_3, text=f"{worst_case_mark:.1f}%", bg="white", anchor="e", justify="right")
         worst_case_label.pack(side="left")
         worst_case_value.pack(side="right")
         row_4 = Frame(analytics_data_frame, bg="white")
         row_4.pack(fill="x", pady=(0, 5))
         best_case_label = Label(row_4, text=best_case_text, bg="white", anchor="w", justify="left")
         best_case_mark = utils.calc_best_case_final_mark(assessments)
-        best_case_value = Label(row_4, text=f"{best_case_mark}%", bg="white", anchor="e", justify="right")
+        best_case_value = Label(row_4, text=f"{best_case_mark:.1f}%", bg="white", anchor="e", justify="right")
         best_case_label.pack(side="left")
         best_case_value.pack(side="right")
 
@@ -174,7 +176,7 @@ class CourseDetailsView(Frame):
             if required_average < 0 or required_average > 100:
                 self.aspired_final_grade_text_label.config(text=f"% is impossible (based on your recorded assessments).")
             else:  # case 2.2: valid required average
-                text = f"%, you must average {required_average}% on the remaining weight."
+                text = f"%, you must average {required_average:.1f}% on the remaining weight."
                 self.aspired_final_grade_text_label.config(text=text)
             return True
         # case 3: invalid input
@@ -206,6 +208,14 @@ class CourseDetailsView(Frame):
             self.controller.delete_course(self.course.id)
             self.controller.show_home_page()
 
-    def select_assessment(self, event):
-        ...
+    def handle_add_assessment_click(self):
+        """Navigate to the Add Assessment page when clicking on the add button."""
+        self.controller.show_add_assessment_page(course=self.course)
 
+    def select_assessment(self, event):
+        """Navigate user to the Edit Assessment page for selected assessment."""
+        assessment_id = self.assessments_tree_table.identify_row(event.y)
+        # check user clicked on a valid row
+        if assessment_id:
+            assessment = self.controller.get_assessment_by_id(assessment_id)
+            self.controller.show_edit_assessment_page(course=self.course, assessment=assessment)

@@ -1,4 +1,5 @@
 from models.db_models import Session, Course, Assessment
+from views.assessment_form_view import AssessmentFormView
 from views.course_details_view import CourseDetailsView
 from views.course_form_view import CourseFormView
 from views.home_view import HomeView
@@ -50,9 +51,30 @@ class MainController:
         # remove old page from memory
         if previous_page:
             previous_page.destroy()
-        add_course_view = CourseFormView(parent=self.master, controller=self, course=course)  # calling with keyword args
-        add_course_view.pack(fill="both", expand=True)
-        self.current_page = add_course_view
+        edit_course_view = CourseFormView(parent=self.master, controller=self, course=course)  # calling with keyword args
+        edit_course_view.pack(fill="both", expand=True)
+        self.current_page = edit_course_view
+
+    def show_add_assessment_page(self, course):
+        """Switch to the Assessment Add page to add new assessment for the course given."""
+        previous_page = self.current_page
+        # remove old page from memory
+        if previous_page:
+            previous_page.destroy()
+        add_assessment_view = AssessmentFormView(parent=self.master, controller=self, course=course, assessment=None)
+        add_assessment_view.pack(fill="both", expand=True)
+        self.current_page = add_assessment_view
+
+    def show_edit_assessment_page(self, course, assessment):
+        """Switch to the Assessment Edit page to edit existing assessment for the course given."""
+        previous_page = self.current_page
+        # remove old page from memory
+        if previous_page:
+            previous_page.destroy()
+        edit_assessment_view = AssessmentFormView(parent=self.master, controller=self,
+                                                  course=course, assessment=assessment)
+        edit_assessment_view.pack(fill="both", expand=True)
+        self.current_page = edit_assessment_view
 
     def get_all_courses(self):
         """Return all courses from the database."""
@@ -109,3 +131,35 @@ class MainController:
         db.delete(course)
         db.commit()
         db.close()
+
+    def create_assessment(self, course_id, title, weight, grade, assessment_type):
+        """Create assessment for course course_id with the given values."""
+        db = Session()
+        assessment = Assessment(
+            course_id=course_id,
+            name=title,
+            weight=weight,
+            grade=grade,
+            type=assessment_type
+        )
+        db.add(assessment)
+        db.commit()
+        db.close()
+
+    def update_assessment(self, assessment_id, title, weight, grade, assessment_type):
+        """Update assessment by assessment_id with the given values."""
+        db = Session()
+        assessment = db.query(Assessment).filter(Assessment.id == assessment_id).first()
+        assessment.name = title
+        assessment.weight = weight
+        assessment.grade = grade
+        assessment.type = assessment_type
+        db.commit()
+        db.close()
+
+    def get_assessment_by_id(self, assessment_id):
+        """Get Assessment by id."""
+        db = Session()
+        assessment = db.query(Assessment).filter(Assessment.id == assessment_id).first()
+        db.close()
+        return assessment
