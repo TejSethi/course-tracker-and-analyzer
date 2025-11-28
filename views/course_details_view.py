@@ -28,7 +28,7 @@ class CourseDetailsView(Frame):
         # edit / delete buttons
         edit_button = CustomButton(header_frame, text="Edit")
         delete_button = DeleteButton(header_frame, text="Delete")
-        back_button = CustomButton(header_frame, text="<-- Go back")
+        back_button = CustomButton(header_frame, text="Go back")
         edit_button.pack(side="left", padx=(30, 10))
         delete_button.pack(side="left", padx=(0, 10))
         back_button.pack(side="right")
