@@ -1,4 +1,4 @@
-from tkinter import Frame, Label, Button, Entry
+from tkinter import Frame, Label, Button, Entry, messagebox
 from tkinter.ttk import Treeview
 
 import utils
@@ -20,7 +20,7 @@ class CourseDetailsView(Frame):
 
         # title
         title_text = f"{self.course.code}: {self.course.name}"
-        title_label = Label(header_frame, text=title_text, font=("Arial", 16), anchor="w", justify="left")
+        title_label = Label(header_frame, text=title_text, wraplength=350, font=("Arial", 16), anchor="w", justify="left")
         title_label.pack(side="left", fill="x")
 
         # edit / delete buttons
@@ -32,6 +32,7 @@ class CourseDetailsView(Frame):
         back_button.pack(side="right")
         edit_button.config(command=self.handle_edit_click)
         back_button.config(command=self.handle_go_back)
+        delete_button.config(command=self.handle_delete_click)
 
         # direct course details (term, instructor, description)
         details_frame = Frame(self, bg="white", bd=2, relief="groove", padx=10, pady=10)
@@ -191,6 +192,19 @@ class CourseDetailsView(Frame):
         Navigate back to the courses page when clicking on the Go back button.
         """
         self.controller.show_home_page()
+
+    def handle_delete_click(self):
+        """
+        Show a confirmation dialog to delete course.
+        If confirmed, delete course and all of its assessments
+        """
+        is_yes = messagebox.askyesno("Delete",
+        f"Are you sure you want delete {self.course.code}?"
+                f"\nThis action will delete all of its assessments as well.")
+
+        if is_yes:
+            self.controller.delete_course(self.course.id)
+            self.controller.show_home_page()
 
     def select_assessment(self, event):
         ...
