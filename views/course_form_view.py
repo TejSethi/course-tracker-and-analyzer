@@ -1,4 +1,4 @@
-from tkinter import Frame, Label, Button, Entry, Text, messagebox, StringVar
+from tkinter import Frame, Label, Entry, Text, messagebox, StringVar
 from tkinter.ttk import Combobox
 
 from views.components.custom_button import CustomButton
