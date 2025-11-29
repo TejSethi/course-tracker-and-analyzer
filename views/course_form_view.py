@@ -154,8 +154,6 @@ class CourseFormView(Frame):
         if year == '':
             errors.append("- Year must not be empty.")
 
-        # Future TODO: verify course isn't a duplicate (course with the same code, semester, year doesn't already exist)
-
         if len(errors) > 0:
             errors_text = "Form errors:\n"
             errors_text += "\n".join(errors)

@@ -62,4 +62,3 @@ class HomeView(Frame):
         # check user clicked on a valid row
         if course_id:
             self.controller.show_course_details_page(course_id)
-
