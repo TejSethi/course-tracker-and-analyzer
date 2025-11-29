@@ -88,3 +88,15 @@ def calc_required_remaining_average(
     necessary_average = (aspired_final_mark - earned) / remaining_weight
     necessary_average_percent = necessary_average * 100
     return necessary_average_percent
+
+
+def filter_completed_assessments(assessments):
+    """
+    Return list of completed assessments from the given assessment.
+    An assessment is completed if it has a grade (grade is not None).
+    """
+    completed = []
+    for assessment in assessments:
+        if assessment.grade is not None:
+            completed.append(assessment)
+    return completed
