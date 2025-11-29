@@ -157,3 +157,17 @@ def test_calc_required_remaining_average__no_remaining_weight():
     # Verify
     expected = 0  # 0 because all assessments have been completed and weights add to 100
     assert actual == expected
+
+
+def test_filter_completed_assessments():
+    """
+    Test filter_completed_assessments filters assessments that have a grade.
+    """
+    # Test
+    completed_assessments = utils.filter_completed_assessments(assessments=mocked_assessment)
+
+    # Verify
+    assert len(mocked_assessment) == 3
+    assert len(completed_assessments) == 2
+    assert completed_assessments[0].grade is not None
+    assert completed_assessments[1].grade is not None
