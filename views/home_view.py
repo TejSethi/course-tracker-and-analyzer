@@ -42,8 +42,9 @@ class HomeView(Frame):
         for course in courses:
             assessments = self.controller.get_assessments_for_course(course.id)
             average = utils.calc_assessments_average(assessments)
+            completed_assessments = utils.filter_completed_assessments(assessments)
             average_text = "-"
-            if len(assessments) > 0:
+            if len(completed_assessments) > 0:
                 average_text = f"{average:.1f}%"
             values = (
                 f"{course.code}: {course.name}",
