@@ -1,4 +1,4 @@
-from tkinter import Frame, Label, Button, Entry, Text, messagebox, StringVar
+from tkinter import Frame, Label, Entry, Text, messagebox, StringVar
 from tkinter.ttk import Combobox
 
 from views.components.custom_button import CustomButton
@@ -153,8 +153,6 @@ class CourseFormView(Frame):
             errors.append("- Semester must not be empty.")
         if year == '':
             errors.append("- Year must not be empty.")
-
-        # Future TODO: verify course isn't a duplicate (course with the same code, semester, year doesn't already exist)
 
         if len(errors) > 0:
             errors_text = "Form errors:\n"

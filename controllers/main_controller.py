@@ -114,7 +114,6 @@ class MainController:
     def update_course(self, course_id, name, description, code, instructor, semester, year):
         """Update course by course_id with the new values."""
         db = Session()
-        # Future TODO: validate that code, semester, year together are unique
         course = db.query(Course).filter(Course.id == course_id).first()
         course.name = name
         course.description = description

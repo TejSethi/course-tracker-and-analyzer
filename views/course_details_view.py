@@ -1,4 +1,4 @@
-from tkinter import Frame, Label, Button, Entry, messagebox
+from tkinter import Frame, Label, Entry, messagebox
 from tkinter.ttk import Treeview
 
 import utils

@@ -1,8 +1,7 @@
-from tkinter import Frame, Label, Button, ttk
+from tkinter import Frame, Label, ttk
 
 import utils
 from views.components.add_button import AddButton
-from views.components.custom_button import CustomButton
 
 
 class HomeView(Frame):
@@ -63,4 +62,3 @@ class HomeView(Frame):
         # check user clicked on a valid row
         if course_id:
             self.controller.show_course_details_page(course_id)
-

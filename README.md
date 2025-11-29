@@ -2,6 +2,11 @@
 This project is a Python Tkinter app that lets the user manage courses 
 and can perform basic analysis. 
 
+For the project to run, install `tkinter`:
+```
+pip install tkinter
+```
+
 
 
 ## Models
@@ -51,3 +56,16 @@ Assessment Form (Add / Edit assessment)
 
 ![Assessment Form Wireframe](wireframes/Assessment_form.png)
 
+
+## Testing
+This project uses `pytest` to run basic unit tests (see directory `tests/`).
+
+First ensure to install `pytest`:
+```
+pip install pytest
+```
+
+Then run tests with:
+```
+pytest
+```

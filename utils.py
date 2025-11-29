@@ -68,18 +68,6 @@ def calc_best_case_final_mark(assessments):
     return best_case_average_percent
 
 
-def get_count_of_incomplete_assessments(assessments):
-    """
-    Return the count of assessments that haven't been completed
-    (grade is None).
-    """
-    count = 0
-    for assessment in assessments:
-        if assessment.grade is None:
-            count += 1
-    return count
-
-
 def calc_required_remaining_average(
         assessments, aspired_final_mark
 ):
