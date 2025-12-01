@@ -173,6 +173,8 @@ class CourseFormView(Frame):
                 year=year,
                 description=description
             )
+            # go to the course details page after editing
+            self.controller.show_course_details_page(self.course.id)
         # add course to db
         else:
             self.controller.create_course(
@@ -183,8 +185,8 @@ class CourseFormView(Frame):
                 year=year,
                 description=description
             )
-        # go to the home view
-        self.controller.show_home_page()
+            # go to the home view
+            self.controller.show_home_page()
 
 
     def handle_click_cancel(self):

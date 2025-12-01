@@ -14,7 +14,7 @@ class MainController:
         self.master.option_add("*Font", "Arial 11")  # global font
         style = Style()
         style.configure("Treeview", font=("Arial", 11))
-        self.master.geometry("600x600")
+        self.master.geometry("600x800")
         self.master.title("Course Tracker And Analyzer")
         self.current_page = None
         self.show_home_page()

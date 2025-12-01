@@ -21,7 +21,7 @@ class HomeView(Frame):
 
         # courses table
         columns = ("course", "instructor", "term", "average")
-        self.courses_table_tree = ttk.Treeview(self, columns=columns, show="headings")
+        self.courses_table_tree = ttk.Treeview(self, columns=columns, show="headings", height=15)
         self.courses_table_tree.pack(fill="x", pady=10)
 
         # Define column headings
