@@ -45,7 +45,8 @@ class CourseDetailsView(Frame):
         description_text = f"Description:\n{self.course.description}"
         term_label = Label(details_frame, text=term_text, bg="white", anchor="w", justify="left")
         instructor_label = Label(details_frame, text=instructor_text, bg="white", anchor="w", justify="left")
-        description_label = Label(details_frame, text=description_text, bg="white", anchor="w", justify="left")
+        description_label = Label(details_frame, text=description_text, bg="white", anchor="w",
+                                  justify="left", wraplength=500)
         term_label.pack(fill="x")
         instructor_label.pack(fill="x")
         description_label.pack(fill="x")
